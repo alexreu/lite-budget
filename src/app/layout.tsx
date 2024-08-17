@@ -1,8 +1,13 @@
+import { themeConfig } from "@/sdk/config/theme";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
+import { ConfigProvider } from "antd";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import { Roboto } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,8 +20,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <ConfigProvider theme={themeConfig}>
+      <html lang="fr">
+        <body className={roboto.className}>
+          <AntdRegistry>{children}</AntdRegistry>
+        </body>
+      </html>
+    </ConfigProvider>
   );
 }
