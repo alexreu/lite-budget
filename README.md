@@ -116,7 +116,6 @@ pnpm run test
 **E2E Tests**
 
 ```shell
-pnpx playwright install
 pnpm run test:e2e
 ```
 
