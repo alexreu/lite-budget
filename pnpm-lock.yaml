@@ -17,6 +17,9 @@ importers:
       chart.js:
         specifier: ^4.4.3
         version: 4.4.3
+      dayjs:
+        specifier: ^1.11.12
+        version: 1.11.12
       lucide-react:
         specifier: ^0.428.0
         version: 0.428.0(react@18.3.1)

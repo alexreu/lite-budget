@@ -2,13 +2,17 @@ import {
   Checkbox as AntdCheckbox,
   CheckboxProps as AntdCheckboxProps,
 } from "antd";
+import { CheckboxGroupProps as AntdCheckboxGroupProps } from "antd/lib/checkbox";
 import { FC } from "react";
 
 const { Group: AntdCheckboxGroup } = AntdCheckbox;
 
-export interface CheckboxProps extends AntdCheckboxProps {}
+interface CheckboxProps extends AntdCheckboxProps {}
+interface CheckboxGroupProps extends AntdCheckboxGroupProps {}
 
-export const Checkbox: FC<CheckboxProps> = (props) => {
+export const Checkbox: FC<CheckboxProps> & {
+  Group: FC<CheckboxGroupProps>;
+} = (props) => {
   return <AntdCheckbox {...props} />;
 };
 
