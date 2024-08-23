@@ -3,6 +3,7 @@ import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ConfigProvider } from "antd";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
+import "./globals.css";
 
 const roboto = Roboto({
   subsets: ["latin"],
