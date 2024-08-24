@@ -10,6 +10,14 @@ const StyledMenu = styled(Menu)`
   border: none;
 `;
 
+const MenuTitle = styled(Typography.Title)`
+  display: inline-flex;
+  justify-content: center;
+  padding: var(--ant-padding-xxs);
+  padding-left: var(--ant-padding-lg);
+  margin: var(--ant-margin-xxs);
+`;
+
 export const DashboardSider = ({
   menuItems,
   collapsed,
@@ -24,12 +32,12 @@ export const DashboardSider = ({
   return (
     <Flex style={{ height: "100%" }} justify="space-between" vertical>
       <Flex justify="center" vertical>
-        <Typography.Title
+        <MenuTitle
           level={3}
           className="inline-flex items-center pl-6 px-2 !m-1"
         >
           {collapsed ? "LB" : "LiteBudget"}
-        </Typography.Title>
+        </MenuTitle>
         <StyledMenu
           mode="inline"
           theme="light"
