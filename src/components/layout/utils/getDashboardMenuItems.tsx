@@ -12,7 +12,7 @@ import {
 
 type MenuItem = Required<MenuProps>["items"][number];
 
-export const MenuItems: MenuItem[] = [
+export const getDashboardMenuItems = (): MenuItem[] => [
   {
     label: "Accueil",
     icon: <Home size={14} />,

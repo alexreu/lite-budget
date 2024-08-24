@@ -2,6 +2,7 @@ import { Menu as AntdMenu, MenuProps as AntdMenuProps } from "antd";
 import { FC } from "react";
 
 interface MenuProps extends AntdMenuProps {}
+export type MenuItem = Required<MenuProps>["items"][number];
 
 /**
  * Menu Component
