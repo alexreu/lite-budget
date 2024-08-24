@@ -1,6 +1,6 @@
-import { themeConfig } from "@/sdk/config/theme";
+import { Providers } from "@/components/providers/Providers";
+import { ThemeConfigProvider } from "@/components/providers/ThemeConfigProvider";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import { ConfigProvider } from "antd";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
@@ -21,12 +21,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ConfigProvider theme={themeConfig}>
-      <html lang="fr">
-        <body className={roboto.className}>
-          <AntdRegistry>{children}</AntdRegistry>
-        </body>
-      </html>
-    </ConfigProvider>
+    <Providers>
+      <ThemeConfigProvider>
+        <html lang="fr">
+          <body className={`${roboto.className}`}>
+            <AntdRegistry>{children}</AntdRegistry>
+          </body>
+        </html>
+      </ThemeConfigProvider>
+    </Providers>
   );
 }

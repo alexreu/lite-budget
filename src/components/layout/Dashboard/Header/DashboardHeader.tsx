@@ -1,16 +1,12 @@
+import { ThemeToggle } from "@/components/theme-toggle/ThemeToggle";
 import { Avatar } from "@/sdk/ui/data-display/Avatar";
 import { Dropdown } from "@/sdk/ui/navigation/Dropdown";
-import { Flex, MenuProps, theme } from "antd";
+import { Flex, MenuProps, theme, Typography } from "antd";
 import { User } from "lucide-react";
-import styled from "styled-components";
 
 type DashboardHeaderProps = {};
 
-const StyledDropdown = styled(Dropdown)`
-  width: 200px;
-`;
-
-export const DashboardHeader = ({ ...props }: DashboardHeaderProps) => {
+export const DashboardHeader = ({}: DashboardHeaderProps) => {
   const { token } = theme.useToken();
 
   const items: MenuProps["items"] = [
@@ -26,24 +22,25 @@ export const DashboardHeader = ({ ...props }: DashboardHeaderProps) => {
       type: "divider",
     },
     {
-      label: "Déconnexion",
+      label: (
+        <Typography.Paragraph type="danger" className="!mb-0">
+          Déconnexion
+        </Typography.Paragraph>
+      ),
       key: "2",
     },
   ];
 
   return (
-    <Flex justify="flex-end" align="center" className="h-full">
-      <StyledDropdown
-        menu={{ items }}
-        trigger={["click"]}
-        overlayClassName="!w-48"
-      >
+    <Flex gap={8} justify="flex-end" align="center" className="h-full">
+      <ThemeToggle />
+      <Dropdown menu={{ items }} trigger={["click"]} overlayClassName="!w-48">
         <Avatar
           size={32}
           icon={<User />}
           style={{ backgroundColor: token.colorPrimary }}
         />
-      </StyledDropdown>
+      </Dropdown>
     </Flex>
   );
 };

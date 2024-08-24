@@ -1,7 +1,7 @@
 import type { Preview } from "@storybook/react";
 import { ConfigProvider } from "antd";
 import React from "react";
-import { themeConfig } from "../src/sdk/config/theme";
+import { lightTheme } from "../src/sdk/config/theme";
 
 const preview: Preview = {
   parameters: {
@@ -14,7 +14,7 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => (
-      <ConfigProvider theme={themeConfig}>
+      <ConfigProvider theme={lightTheme}>
         <Story />
       </ConfigProvider>
     ),

@@ -1,13 +1,14 @@
 "use client";
 
-import { themeConfig } from "@/sdk/config/theme";
+import { DashboardHeader } from "@/components/layout/Dashboard/Header";
+import { DashboardSider } from "@/components/layout/Dashboard/Sider";
+import { getDashboardMenuItems } from "@/components/layout/Dashboard/utils/getDashboardMenuItems";
+import { getThemeConfig } from "@/sdk/config/theme";
+import { useTheme } from "@/sdk/context/ThemeContext";
 import { useCurrentSelectedKeys } from "@/sdk/hooks/useCurrentSelectedKeys";
 import { MenuItem } from "@/sdk/ui/navigation/Menu";
 import { ConfigProvider, Layout, theme } from "antd";
 import { useMemo, useState } from "react";
-import { DashboardHeader } from "../dashboard/Header";
-import { DashboardSider } from "../dashboard/Sider";
-import { getDashboardMenuItems } from "./utils/getDashboardMenuItems";
 
 type DashboardLayoutProps = {
   children: React.ReactNode;
@@ -20,6 +21,9 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const { token } = useToken();
   const [collapsed, setCollapsed] = useState(false);
   const selectedKeys = useCurrentSelectedKeys();
+  const { theme: themeMode } = useTheme();
+
+  const themeConfig = getThemeConfig(themeMode);
 
   const items: MenuItem[] = useMemo(() => getDashboardMenuItems(), []);
 
