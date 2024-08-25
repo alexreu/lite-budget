@@ -55,7 +55,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
           <Header>
             <DashboardHeader />
           </Header>
-          <Content>{children}</Content>
+          <Content className="p-8">{children}</Content>
           <Footer></Footer>
         </Layout>
       </Layout>
