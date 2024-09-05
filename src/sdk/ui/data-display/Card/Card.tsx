@@ -1,3 +1,5 @@
+"use client";
+
 import { Card as AntdCard, CardProps as AntdCardProps } from "antd";
 import {
   CardGridProps as AntdCardGridProps,
