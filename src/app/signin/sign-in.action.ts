@@ -1,6 +1,6 @@
 "use server";
 
-import { signIn } from "@/auth";
+import { signIn, signOut } from "@/auth";
 import { AuthError } from "next-auth";
 import { redirect } from "next/navigation";
 
@@ -13,4 +13,8 @@ export const signInAction = async () => {
     }
     throw error;
   }
+};
+
+export const signOutAction = async () => {
+  await signOut();
 };

@@ -1,8 +1,10 @@
+import { signOutAction } from "@/app/signin/sign-in.action";
 import { ThemeToggle } from "@/components/theme-toggle/ThemeToggle";
 import { Avatar } from "@/sdk/ui/data-display/Avatar";
 import { Dropdown } from "@/sdk/ui/navigation/Dropdown";
 import { Flex, MenuProps, theme, Typography } from "antd";
 import { User } from "lucide-react";
+import { signOut } from "next-auth/react";
 
 type DashboardHeaderProps = {};
 
@@ -23,11 +25,16 @@ export const DashboardHeader = ({}: DashboardHeaderProps) => {
     },
     {
       label: (
-        <Typography.Paragraph type="danger" className="!mb-0">
+        <Typography.Text
+          type="danger"
+          className="!mb-0"
+          onClick={signOutAction}
+        >
           Déconnexion
-        </Typography.Paragraph>
+        </Typography.Text>
       ),
       key: "2",
+      onClick: () => signOut(),
     },
   ];
 
