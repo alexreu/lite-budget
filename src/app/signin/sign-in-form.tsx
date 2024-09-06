@@ -51,41 +51,45 @@ export const SignInForm = () => {
           </Button>
         </form>
       </Flex>
-      <Divider />
+      <Divider orientationMargin={12} />
       <Form name="login" layout="vertical" onFinish={handleSubmit(onSubmit)}>
-        <Flex vertical gap={16}>
-          <Form.Item
+        <Form.Item
+          name="email"
+          label="Email"
+          validateStatus={errors.email ? "error" : ""}
+          help={errors.email?.message}
+        >
+          <Controller
+            control={control}
             name="email"
-            label="Email"
-            validateStatus={errors.email ? "error" : ""}
-            help={errors.email?.message}
-          >
-            <Controller
-              control={control}
-              name="email"
-              render={({ field }) => (
-                <Input {...field} placeholder="exemple@domaine.com" />
-              )}
-            />
-          </Form.Item>
-          <Form.Item
+            render={({ field }) => (
+              <Input {...field} placeholder="exemple@domaine.com" />
+            )}
+          />
+        </Form.Item>
+        <Form.Item
+          name="password"
+          label="Password"
+          validateStatus={errors.password ? "error" : ""}
+          help={errors.password?.message}
+        >
+          <Controller
+            control={control}
             name="password"
-            label="Password"
-            validateStatus={errors.password ? "error" : ""}
-            help={errors.password?.message}
-          >
-            <Controller
-              control={control}
-              name="password"
-              render={({ field }) => (
-                <Input.Password placeholder="Password" {...field} />
-              )}
-            />
-          </Form.Item>
-          <Button type="primary" htmlType="submit" block>
-            Sign In
-          </Button>
-        </Flex>
+            render={({ field }) => (
+              <Input.Password placeholder="Password" {...field} />
+            )}
+          />
+        </Form.Item>
+        <Button
+          type="primary"
+          htmlType="submit"
+          className="mt-2"
+          shape="round"
+          block
+        >
+          Connexion
+        </Button>
       </Form>
     </Card>
   );
