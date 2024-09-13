@@ -1,6 +1,12 @@
 import { auth } from "@/auth";
 import { DashboardLayout as DashboardLayoutComponent } from "@/components/layout/Dashboard/Layout";
+import { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description: "Dashboard",
+};
 
 export default async function DashboardLayout({
   children,
@@ -8,10 +14,6 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   const session = await auth();
-
-  // if (!session) {
-  //   redirect("/signin");
-  // }
 
   return (
     <SessionProvider session={session}>

@@ -1,16 +1,32 @@
 import prisma from "@/prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
-import Google from "next-auth/providers/google";
+import authConfig from "./auth.config";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
-  providers: [Google],
+  session: {
+    strategy: "jwt",
+  },
   secret: process.env.AUTH_SECRET,
   pages: {
     signIn: "/signin",
   },
   callbacks: {
+    redirect: () => {
+      return "/dashboard";
+    },
+    authorized: async ({ auth }) => {
+      // Logged in users are authenticated, otherwise redirect to login page
+      return !!auth;
+    },
+    session: async ({ session, token }) => {
+      console.log({ session, token });
+      if (session?.user) {
+        session.user.id = token.sub as string;
+      }
+      return session;
+    },
     async signIn({ user, account }) {
       if (account?.provider === "google") {
         const existingUser = await prisma.user.findUnique({
@@ -42,4 +58,5 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return true;
     },
   },
+  ...authConfig,
 });

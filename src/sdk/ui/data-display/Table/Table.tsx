@@ -1,7 +1,7 @@
 import { Table as AntdTable, TableProps as AntdTableProps } from "antd";
 import { FC } from "react";
 
-export type TableProps = AntdTableProps;
+export type TableProps<T> = AntdTableProps<T>;
 
 /**
  * Table component
@@ -33,6 +33,6 @@ export type TableProps = AntdTableProps;
  * @extends {FC<TableProps>}
  */
 
-export const Table: FC<TableProps> = (props) => {
+export const Table: FC<TableProps<any>> = (props) => {
   return <AntdTable {...props} />;
 };
