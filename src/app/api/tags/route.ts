@@ -1,10 +1,25 @@
+import {
+  deleteTagSchema,
+  newTagSchema,
+} from "@/app/(dashboard)/dashboard/tags/_schema/tag.schema";
 import { auth } from "@/auth";
 import prisma from "@/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, color, userId } = await request.json();
+    const body = await request.json();
+
+    const result = newTagSchema.safeParse(body);
+
+    if (!result.success) {
+      return NextResponse.json(
+        { error: result.error.message },
+        { status: 400 }
+      );
+    }
+
+    const { name, color, userId } = result.data;
 
     if (!name || !userId) {
       return NextResponse.json(
@@ -23,7 +38,11 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(tag);
   } catch (error) {
-    return NextResponse.json(error);
+    console.error("Error creating tag:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
 }
 
@@ -43,16 +62,31 @@ export async function GET() {
 }
 
 export async function DELETE(request: NextRequest) {
-  const { id } = await request.json();
-
   try {
+    const body = await request.json();
+
+    const result = deleteTagSchema.safeParse(body);
+
+    if (!result.success) {
+      return NextResponse.json(
+        { error: "Validation failed", issues: result.error.message },
+        { status: 400 }
+      );
+    }
+
+    const { id } = result.data;
+
     const tag = await prisma.tag.delete({
       where: {
         id,
       },
     });
-    return NextResponse.json(tag);
+    return NextResponse.json(tag, { status: 200 });
   } catch (error) {
-    return NextResponse.json(error);
+    console.error("Error deleting tag:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
 }

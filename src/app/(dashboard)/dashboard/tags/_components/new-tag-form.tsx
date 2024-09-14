@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ColorPicker, Flex, Form, message } from "antd";
 import { useSession } from "next-auth/react";
 import { Controller, useForm } from "react-hook-form";
-import { newTagSchema, NewTagSchema } from "../_schema/new-tag.schema";
+import { newTagSchema, NewTagSchema } from "../_schema/tag.schema";
 
 export const NewTagForm = () => {
   const [messageApi, contextHolder] = message.useMessage();

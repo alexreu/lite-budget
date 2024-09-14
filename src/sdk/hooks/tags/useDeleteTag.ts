@@ -1,11 +1,14 @@
-import { TagResource } from "@/sdk/types/tagResource";
+import {
+  DeleteTagSchema,
+  TagResourceSchema,
+} from "@/app/(dashboard)/dashboard/tags/_schema/tag.schema";
 import { APIRoutes } from "@/sdk/utils/APIRoutes";
 import axios from "axios";
 import { useMutation } from "react-query";
 
-const deleteTag = async (id: string) => {
-  const response = await axios.delete<TagResource>(APIRoutes.TAGS, {
-    data: { id },
+const deleteTag = async (data: DeleteTagSchema) => {
+  const response = await axios.delete<TagResourceSchema>(APIRoutes.TAGS, {
+    data,
   });
   return response.data;
 };
