@@ -4,7 +4,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
-    console.log({ request });
     const { name, color, userId } = await request.json();
 
     if (!name || !userId) {
@@ -38,6 +37,21 @@ export async function GET() {
       },
     });
     return NextResponse.json(tags);
+  } catch (error) {
+    return NextResponse.json(error);
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  const { id } = await request.json();
+
+  try {
+    const tag = await prisma.tag.delete({
+      where: {
+        id,
+      },
+    });
+    return NextResponse.json(tag);
   } catch (error) {
     return NextResponse.json(error);
   }

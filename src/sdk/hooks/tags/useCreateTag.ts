@@ -4,7 +4,7 @@ import axios from "axios";
 import { useMutation, useQueryClient } from "react-query";
 
 const createTag = async ({ name, color, userId }: NewTagSchema) => {
-  const response = await axios.post(APIRoutes.TAGS, {
+  const response = await axios.post<NewTagSchema>(APIRoutes.TAGS, {
     name,
     color,
     userId,

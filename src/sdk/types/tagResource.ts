@@ -1,4 +1,4 @@
-export type Tag = {
+export type TagResource = {
   id: string;
   name: string;
   color: string;
