@@ -7,9 +7,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ColorPicker, Flex, Form, message } from "antd";
 import { useSession } from "next-auth/react";
 import { Controller, useForm } from "react-hook-form";
-import { newTagSchema, NewTagSchema } from "../_schema/tag.schema";
+import { createTagSchema, CreateTagSchema } from "../_schema/tag.schema";
 
-export const NewTagForm = () => {
+export const CreateTagForm = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const { data: session } = useSession();
 
@@ -24,8 +24,8 @@ export const NewTagForm = () => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<NewTagSchema>({
-    resolver: zodResolver(newTagSchema),
+  } = useForm<CreateTagSchema>({
+    resolver: zodResolver(createTagSchema),
     defaultValues: {
       color: "#4A90E2",
       userId: session?.user?.id as string,
@@ -34,7 +34,7 @@ export const NewTagForm = () => {
 
   const { mutate, isLoading, isSuccess, isError, error } = useCreateTag();
 
-  const onSubmit = async (data: NewTagSchema) => {
+  const onSubmit = async (data: CreateTagSchema) => {
     await mutate(data);
 
     if (isSuccess && !isLoading) {

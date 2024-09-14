@@ -1,6 +1,6 @@
 import {
+  createTagSchema,
   deleteTagSchema,
-  newTagSchema,
 } from "@/app/(dashboard)/dashboard/tags/_schema/tag.schema";
 import { auth } from "@/auth";
 import prisma from "@/prisma";
@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    const result = newTagSchema.safeParse(body);
+    const result = createTagSchema.safeParse(body);
 
     if (!result.success) {
       return NextResponse.json(
