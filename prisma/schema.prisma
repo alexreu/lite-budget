@@ -1,0 +1,234 @@
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model User {
+    id            String          @id @default(cuid())
+    name          String?
+    email         String          @unique
+    emailVerified DateTime?
+    image         String?
+    accounts      Account[]
+    sessions      Session[]
+    // Optional for WebAuthn support
+    Authenticator Authenticator[]
+
+    bankAccounts          BankAccount[]
+    transactions          Transaction[]
+    budgets               Budget[]
+    recurringTransactions RecurringTransaction[]
+    savingsGoals          SavingsGoal[]
+    tags                  Tag[]
+    notifications         Notification[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Account {
+    userId            String
+    type              String
+    provider          String
+    providerAccountId String
+    refresh_token     String?
+    access_token      String?
+    expires_at        Int?
+    token_type        String?
+    scope             String?
+    id_token          String?
+    session_state     String?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@id([provider, providerAccountId])
+}
+
+model Session {
+    sessionToken String   @unique
+    userId       String
+    expires      DateTime
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+    identifier String
+    token      String
+    expires    DateTime
+
+    @@id([identifier, token])
+}
+
+// Optional for WebAuthn support
+model Authenticator {
+    credentialID         String  @unique
+    userId               String
+    providerAccountId    String
+    credentialPublicKey  String
+    counter              Int
+    credentialDeviceType String
+    credentialBackedUp   Boolean
+    transports           String?
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@id([userId, credentialID])
+}
+
+// Bank account model
+model BankAccount {
+    id                    String                 @id @default(cuid())
+    name                  String
+    type                  BankAccountType
+    balance               Float                  @default(0.0)
+    currency              Currency
+    userId                String
+    user                  User                   @relation(fields: [userId], references: [id])
+    transactions          Transaction[]
+    recurringTransactions RecurringTransaction[]
+    createdAt             DateTime               @default(now())
+    updatedAt             DateTime               @updatedAt
+}
+
+// Transaction model
+model Transaction {
+    id          String          @id @default(cuid())
+    amount      Float
+    description String?
+    date        DateTime        @default(now())
+    type        TransactionType
+    categoryId  Int?
+    category    Category?       @relation(fields: [categoryId], references: [id])
+    accountId   String
+    account     BankAccount     @relation(fields: [accountId], references: [id])
+    userId      String
+    user        User            @relation(fields: [userId], references: [id])
+    createdAt   DateTime        @default(now())
+    updatedAt   DateTime        @updatedAt
+    tag         Tag?            @relation(fields: [tagId], references: [id])
+    tagId       String?
+}
+
+// Budget model
+model Budget {
+    id         String     @id @default(cuid())
+    name       String
+    amount     Float
+    startDate  DateTime
+    endDate    DateTime
+    userId     String
+    user       User       @relation(fields: [userId], references: [id])
+    categories Category[]
+    createdAt  DateTime   @default(now())
+    updatedAt  DateTime   @updatedAt
+}
+
+// Category model for expenses
+model Category {
+    id                    Int                    @id @default(autoincrement())
+    name                  String
+    budgetId              String?
+    budget                Budget?                @relation(fields: [budgetId], references: [id])
+    transactions          Transaction[]
+    recurringTransactions RecurringTransaction[]
+    createdAt             DateTime               @default(now())
+    updatedAt             DateTime               @updatedAt
+}
+
+// Reccuring transaction model
+model RecurringTransaction {
+    id            String      @id @default(cuid())
+    name          String
+    amount        Float
+    frequency     Frequency
+    startDate     DateTime
+    endDate       DateTime?
+    userId        String
+    user          User        @relation(fields: [userId], references: [id])
+    bankAccountId String
+    bankAccount   BankAccount @relation(fields: [bankAccountId], references: [id])
+    categoryId    Int?
+    category      Category?   @relation(fields: [categoryId], references: [id])
+    createdAt     DateTime    @default(now())
+    updatedAt     DateTime    @updatedAt
+}
+
+// Savings goal model
+model SavingsGoal {
+    id            String    @id @default(cuid())
+    name          String
+    targetAmount  Float
+    currentAmount Float     @default(0)
+    deadline      DateTime?
+    userId        String
+    user          User      @relation(fields: [userId], references: [id])
+    createdAt     DateTime  @default(now())
+    updatedAt     DateTime  @updatedAt
+}
+
+// Tag model
+model Tag {
+    id           String        @id @default(cuid())
+    name         String
+    color        String?       @default("#4A90E2")
+    transactions Transaction[]
+    userId       String
+    user         User          @relation(fields: [userId], references: [id])
+    createdAt    DateTime      @default(now())
+    updatedAt    DateTime      @updatedAt
+}
+
+// Notification model
+model Notification {
+    id        String           @id @default(cuid())
+    userId    String
+    user      User             @relation(fields: [userId], references: [id])
+    type      NotificationType
+    message   String
+    isRead    Boolean          @default(false)
+    createdAt DateTime         @default(now())
+    updatedAt DateTime         @updatedAt
+}
+
+// Bank Account type
+enum BankAccountType {
+    CHECKING
+    SAVINGS
+}
+
+// TransactionType enum
+enum TransactionType {
+    INCOME
+    EXPENSE
+}
+
+// Currency enum
+enum Currency {
+    USD
+    EUR
+}
+
+// Frequency enum
+enum Frequency {
+    DAILY
+    WEEKLY
+    MONTHLY
+    YEARLY
+}
+
+// Notification types enum
+enum NotificationType {
+    BUDGET_LIMIT
+    GOAL_REMINDER
+    IMPORTANT_DATE
+}

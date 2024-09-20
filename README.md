@@ -1,36 +1,124 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# LiteBudget
 
-## Getting Started
+LiteBudget is a personal finance management application designed to help users track their expenses, manage budgets, and monitor their financial health. Built with modern web technologies, LiteBudget provides a simple yet powerful interface to handle daily financial tasks.
 
-First, run the development server:
+## Table of Contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Environment Variables](#environment-variables)
+- [Running the Application](#running-the-application)
+- [Testing](#testing)
+- [Deployment](#deployment)
+- [License](#license)
+
+## Features
+
+- **Expense Tracking**: Manage and categorize your daily transactions.
+- **Budget Management**: Create, view, and manage multiple budgets.
+- **Account Management**: Track multiple bank accounts, including balances.
+- **Visualization**: View monthly and yearly expense reports with interactive charts.
+- **Authentication**: Secure user authentication with session management.
+- **Responsive Design**: Fully responsive UI for desktop and mobile devices.
+
+## Tech Stack
+
+- **Frontend**:
+
+  - [Next.js](https://nextjs.org/) - React framework for server-side rendering and static site generation.
+  - [TypeScript](https://www.typescriptlang.org/) - Type-safe programming language that builds on JavaScript.
+  - [Ant Design](https://ant.design/) - A UI library for designing responsive, modern user interfaces.
+  - [Chart.js](https://www.chartjs.org/) - For rendering dynamic charts and graphs.
+
+- **Backend**:
+
+  - [Next.js API Routes](https://nextjs.org/docs/api-routes/introduction) - For backend logic and API endpoints.
+  - [Prisma](https://www.prisma.io/) - ORM for interacting with the database.
+  - [Supabase](https://supabase.io/) - Managed PostgreSQL database with real-time capabilities.
+
+- **Authentication**:
+
+  - [Auth.js (NextAuth.js)](https://authjs.dev/) - Secure user authentication with multiple providers.
+
+- **Testing**:
+
+  - [Jest](https://jestjs.io/) - JavaScript testing framework for unit tests.
+  - [Playwright](https://playwright.dev/) - End-to-end testing framework for testing user interactions.
+
+- **CI/CD**:
+  - [Vercel](https://vercel.com/) - Deployment platform optimized for Next.js applications.
+
+## Installation
+
+1. **Clone the repository**:
+
+   ```shell
+   git clone https://github.com/yourusername/litebudget.git
+
+   cd litebudget
+   ```
+
+2. **Install dependencies**:
+   ```shell
+    pnpm install
+   ```
+3. **Setup prisma**:
+   Initialize Prisma and run migrations:
+
+   ```shell
+   pnpx prisma init
+   pnpx prisma migrate dev
+   pnpx prisma generate
+   ```
+
+## Environment Variables
+
+Create a .env file in the root directory and configure the following environment variables:
+
+```shell
+DATABASE_URL=your_database_url
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your_nextauth_secret
+SUPABASE_URL=your_supabase_url
+SUPABASE_KEY=your_supabase_key
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Running the Application
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Development**
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+To start the application in development mode:
 
-## Learn More
+```shell
+pnpm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+**Production**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To start the application in production mode:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```shell
+pnpm run build
+pnpm run start
+```
 
-## Deploy on Vercel
+The application will be available at `http://localhost:3000`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Testing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+**Unit Tests**
+
+```shell
+pnpm run test
+```
+
+**E2E Tests**
+
+```shell
+pnpm run test:e2e
+```
+
+## License
+
+This project is proprietary and not open source. All rights reserved.

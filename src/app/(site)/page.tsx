@@ -25,6 +25,7 @@ export default function Home() {
               priority
             />
           </a>
+          <a href="/dashboard">dashboard</a>
         </div>
       </div>
 
